@@ -112,6 +112,7 @@
 -define:ENABLE_UNITY_COLLECTIONS_CHECKS
 -define:ENABLE_BURST_AOT
 -define:UNITY_TEAM_LICENSE
+-define:UNITY_PRO_LICENSE
 -define:ENABLE_CUSTOM_RENDER_TEXTURE
 -define:ENABLE_DIRECTOR
 -define:ENABLE_LOCALIZATION
@@ -377,9 +378,11 @@
 "Assets/RCK 2.3/Scripts/VehicleDamage.cs"
 "Assets/RCK 2.3/Skidmarks/Skidmarks Essentials/Skidmarks.cs"
 "Assets/RCK 2.3/Skidmarks/WheelSkidmarks.cs"
+"Assets/Scripts/CarControllerNew.cs"
 "Assets/Scripts/HandControl.cs"
 "Assets/Scripts/LeftHandControl.cs"
 "Assets/Scripts/RightHandControl.cs"
+"Assets/Scripts/uiControler.cs"
 -langversion:9.0
 
 /deterministic

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 public class VehicleCamera : MonoBehaviour
 {
@@ -233,18 +234,6 @@ public class VehicleCamera : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             RestCar();
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Application.LoadLevel(Application.loadedLevel);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PoliceLightSwitch();
         }
 
 

@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum ControlMode { simple = 1, touch = 2 }
+public enum ControlMode { simple = 1, touch = 2 , vr = 3}
 
 
 public class VehicleControl : MonoBehaviour
 {
-
 
     public ControlMode controlMode = ControlMode.simple;
 
@@ -72,8 +71,9 @@ public class VehicleControl : MonoBehaviour
         public AudioSource switchGear;
     }
 
-    // Car Particle /////////////////////////////////
+    // Car Particle ////////////////////////////////
 
+    
     public CarParticles carParticles;
 
     [System.Serializable]
@@ -127,7 +127,6 @@ public class VehicleControl : MonoBehaviour
 
     
 
-
     [System.Serializable]
     public class HitGround
     {
@@ -155,15 +154,12 @@ public class VehicleControl : MonoBehaviour
     [HideInInspector]
     public bool shift;
 
-    private float torque = 100f;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float speed = 0.0f;
 
     private float lastSpeed = -10.0f;
 
-
-    private bool shifting = false;
 
 
     float[] efficiencyTable = { 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 1.0f, 1.0f, 0.95f, 0.80f, 0.70f, 0.60f, 0.5f, 0.45f, 0.40f, 0.36f, 0.33f, 0.30f, 0.20f, 0.10f, 0.05f };
@@ -431,17 +427,10 @@ public class VehicleControl : MonoBehaviour
 
 
 
-
-
-    
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     void Update()
     {
-
-
         if (!carSetting.automaticGear && activeControl)
         {
             if (Input.GetKeyDown("page up"))
@@ -456,7 +445,6 @@ public class VehicleControl : MonoBehaviour
 
             }
         }
-
     }
 
 
@@ -464,7 +452,6 @@ public class VehicleControl : MonoBehaviour
 
     void FixedUpdate()
     {
-
 
         // speed of car
         speed = myRigidbody.velocity.magnitude * 2.7f;
