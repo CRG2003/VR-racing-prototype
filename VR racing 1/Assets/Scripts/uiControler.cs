@@ -31,11 +31,10 @@ public class uiControler : MonoBehaviour
 
         mins = format(min);
         secs = format(sec);
-        if (mil > 0.1f) {
-            mils = "0" + Math.Round(mil * 10).ToString();
-        }
-        else {
-            mils = Math.Round(mil * 10).ToString();
+
+        mils = format(mil * 1000);
+        if (mil < .1f){
+            mils = "0" + mils;
         }
 
         timer.text = mins + ":" + secs + ":" + mils;
@@ -43,12 +42,15 @@ public class uiControler : MonoBehaviour
 
     }
 
-    string format(int i) {
+    string format(float i) {
         if (i < 10) {
-            return "0" + i.ToString();
+            if (i == 0){
+                return "00";
+            }
+            return "0" + Math.Round(i).ToString();
         }
         else {
-            return i.ToString();
+            return Math.Round(i).ToString();
         }
     }
 }
