@@ -315,9 +315,7 @@ public class VehicleControl : MonoBehaviour
             fc.stiffness = carSetting.stiffness;
             col.sidewaysFriction = fc;
 
-
         }
-
 
     }
 

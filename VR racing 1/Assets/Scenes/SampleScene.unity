@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1170,6 +1170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RallyCar
       objectReference: {fileID: 0}
+    - target: {fileID: 186536, guid: b82529e8ddfc06e4fb493d04ff82ec97, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400324, guid: b82529e8ddfc06e4fb493d04ff82ec97, type: 3}
       propertyPath: m_LocalScale.x
       value: -1
@@ -1385,8 +1389,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896014798}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.00000008940697, z: -0, w: 1}
-  m_LocalPosition: {x: -0.45008084, y: 1.4584618, z: -0.029777586}
+  m_LocalRotation: {x: -0, y: -0.000000059604645, z: 0, w: 1}
+  m_LocalPosition: {x: -0.45008084, y: 1.4584618, z: -0.029777467}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2776,6 +2780,14 @@ MonoBehaviour:
   wfr: {fileID: 1748770001}
   wbl: {fileID: 217389724}
   wbr: {fileID: 94891933}
+  curTorque: 100
+  powerShift: 100
+  motorRPM: 0
+  speed: 0
+  brake: 0
+  shift: 0
+  neutral: 1
+  backwards: 0
 --- !u!1001 &1918640557
 PrefabInstance:
   m_ObjectHideFlags: 0
