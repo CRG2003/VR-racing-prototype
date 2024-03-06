@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CarControllerNew : MonoBehaviour
 {
@@ -18,9 +19,9 @@ public class CarControllerNew : MonoBehaviour
 
     private Rigidbody rb;
     private Vector3 steerCurAngle;
+    private PlayerInput input;
 
-
-
+    [System.Serializable]
     public class CarSettings{
 
         public Transform carsteer;
@@ -44,7 +45,6 @@ public class CarControllerNew : MonoBehaviour
     }
 
     public CarSettings carSettings;
-
 
 
     private class wheelComponent    {
@@ -131,6 +131,8 @@ public class CarControllerNew : MonoBehaviour
             fc.stiffness = 2f;
             col.sidewaysFriction = fc;
         }
+
+        input = GetComponent<PlayerInput>();
     }
 
 
@@ -147,13 +149,70 @@ public class CarControllerNew : MonoBehaviour
             slip2 = Mathf.MoveTowards(slip2, 0f, .1f);
         }
 
-        steer = Mathf.MoveTowards(steer, Input.GetAxis("Horisontal"), 0.2f);
-        accel = Input.GetAxis("Vertical");
+        steer = Mathf.MoveTowards(steer, input.actions.FindAction("steer").ReadValue<float>(), 0.2f);
+        accel = input.actions.FindAction("Accel").ReadValue<float>();
         brake = Input.GetKey(KeyCode.Space);
 
         if (Input.GetKey(KeyCode.W)) {
-            Debug.Log("w");
+            Debug.Log(input.actions.FindAction("steer").ReadValue<float>().ToString());
             speed++;
         }
+
+        if (carSettings.carSteer){
+            carSettings.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z + (steer * -120.0f));
+        }
+
+
+        wantedRPM = (5500.0f * accel) * 0.1f + wantedRPM * 0.9f;
+        float rpm;
+        int moterWheels = 0;
+        int curWheel = 0;
+
+        foreach (WheelComponent w in wheels){
+            WheelHit hit;
+            WheelCollider col = w.collider;
+
+            if (w.drive){
+                if (brake){
+                    rpm += accel * carSettings.idleRPM;
+                }
+                else{
+                    rpm += col.rpm;
+                }
+
+                motorWheels++;
+            }
+        }
+
+
+        if (brake || accel < 0){
+            if ((accel < 0) || (brake && (w == wheels[2] || w == wheels[3]))){
+
+                if (brake && (accel > 0)){
+                    slip = Mathf.Lerp(slip, 5, accel, * 0.01f);
+                }
+                else if (speed > 1){
+                    slip = Mathf.Lerp(slip, 1, 0.002f);
+                }
+                else{
+                    slip = Mathf.Lerp(slip, 1, 0.02f);
+                }
+
+                wantedRPM = 0;
+                col.brakeTorque = carSettings.brakePower;
+                w.rotation = w_rotate;
+            }
+        }
+
+        else{
+            col.brakeTorque = accel == 0 ? col.brakeTorque = 1000 : col.brakeTorque = 0;
+
+            slip = speed > 0 ? (speed > 100 ? slip = < Mathf.Lerp(slip, 1 + Mathf.Abs(steer), 0.02f) : slip = Mathf.Lerp(slip, 1.5f, 0.02f)) : slip = Mathf.Lerp(slip, 0.01f, 0.02f);
+
+            w_rotate = w.rotation;
+        }
+
+
+        WheelFrictionCurve fc = col.forwardFriction;
     }
 }
