@@ -11,23 +11,33 @@ public class CarControllerNew : MonoBehaviour
     public Transform wfl, wfr, wbl, wbr;
 
 
+<<<<<<< HEAD
     // public variables
+=======
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
     public float curTorque = 100f, powerShift = 100f, motorRPM = 0f, speed = 0f;
     public bool brake, shift, neutral = true, backwards = false;
 
 
+<<<<<<< HEAD
     // private variables
+=======
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
     private float steer = 0f, accel = 0f, lastSpeed = -10f;
     private float shiftTime = 0f, shiftDelay = 0f, wantedRPM = 0f;
     private float w_rotate, slip, slip2 = 0f;
     private bool shiftMotor;
+
 
     private Rigidbody rb;
     private Vector3 steerCurAngle;
     private PlayerInput input;
 
 
+<<<<<<< HEAD
     // efficiency table (used to effect motorRPM)
+=======
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
     float[] efficiencyTable = { 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 1.0f, 1.0f, 0.95f, 0.80f, 0.70f, 0.60f, 0.5f, 0.45f, 0.40f, 0.36f, 0.33f, 0.30f, 0.20f, 0.10f, 0.05f };
     float efficiencyTableStep = 250.0f;
 
@@ -62,7 +72,10 @@ public class CarControllerNew : MonoBehaviour
 
 
 
+<<<<<<< HEAD
     // aspects of the wheels
+=======
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
     private class wheelComponent    {
 
         public Transform wheel;
@@ -76,7 +89,10 @@ public class CarControllerNew : MonoBehaviour
 
 
 
+<<<<<<< HEAD
     // function to set each wheels components
+=======
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
     private wheelComponent setWheel(Transform wheel, float maxSteer, bool drive, float pos_y){
 
         GameObject wheelCol = new GameObject(wheel.name + "WheelCollider");
@@ -98,6 +114,7 @@ public class CarControllerNew : MonoBehaviour
 
         return result;
     }
+
 
 
     public class Ground{
@@ -193,8 +210,12 @@ public class CarControllerNew : MonoBehaviour
         int motorWheels = 0;
         int curWheel = 0;
 
+<<<<<<< HEAD
 
         foreach (wheelComponent w in wheels) {
+=======
+        foreach (wheelComponent w in wheels){
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
             WheelHit hit;
             WheelCollider col = w.collider;
 
@@ -208,6 +229,7 @@ public class CarControllerNew : MonoBehaviour
 
                 motorWheels++;
             }
+<<<<<<< HEAD
 
 
 
@@ -221,6 +243,21 @@ public class CarControllerNew : MonoBehaviour
                         slip = Mathf.Lerp(slip, 1, 0.002f);
                     }
                     else {
+=======
+        
+
+
+            if (brake || accel < 0){
+                if ((accel < 0) || (brake && (w == wheels[2] || w == wheels[3]))){
+
+                    if (brake && (accel > 0)){
+                        slip = Mathf.Lerp(slip, 5, accel * 0.01f);
+                    }
+                    else if (speed > 1){
+                        slip = Mathf.Lerp(slip, 1, 0.002f);
+                    }
+                    else{
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
                         slip = Mathf.Lerp(slip, 1, 0.02f);
                     }
 
@@ -230,7 +267,11 @@ public class CarControllerNew : MonoBehaviour
                 }
             }
 
+<<<<<<< HEAD
             else {
+=======
+            else{
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
                 col.brakeTorque = accel == 0 ? col.brakeTorque = 1000 : col.brakeTorque = 0;
 
                 slip = speed > 0 ? (speed > 100 ? slip = Mathf.Lerp(slip, 1 + Mathf.Abs(steer), 0.02f) : slip = Mathf.Lerp(slip, 1.5f, 0.02f)) : slip = Mathf.Lerp(slip, 0.01f, 0.02f);
@@ -241,6 +282,7 @@ public class CarControllerNew : MonoBehaviour
 
             WheelFrictionCurve fc = col.forwardFriction;
 
+<<<<<<< HEAD
             fc.asymptoteValue = 5000;
             fc.extremumSlip = 0;
             fc.asymptoteSlip = 0;
@@ -248,11 +290,23 @@ public class CarControllerNew : MonoBehaviour
             col.forwardFriction = fc;
 
             fc.stiffness = 2 / (slip + slip2);
+=======
+
+            fc.asymptoteValue = 5000.0f;
+            fc.extremumSlip = 2.0f;
+            fc.asymptoteSlip = 20.0f;
+            fc.stiffness = 2.0f / (slip + slip2);
+            col.forwardFriction = fc;
+
+            fc = col.sidewaysFriction;
+            fc.stiffness = 2.0f / (slip + slip2);
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
             fc.extremumSlip = 0.2f + Mathf.Abs(steer);
             col.sidewaysFriction = fc;
 
 
 
+<<<<<<< HEAD
             if (Mathf.Abs(steer) < 0.2f) {
                 curTorque = powerShift > 0 ? carSettings.shiftPower : carSettings.carPower;
             }
@@ -283,11 +337,39 @@ public class CarControllerNew : MonoBehaviour
 
             else {
                 lp.y = w.startPos.y - 0.0f;
+=======
+            if (shift && (speed > 50) && Mathf.Abs(steer) < 0.2f){
+                powerShift = Mathf.MoveTowards(powerShift, 0, Time.deltaTime * 10);
+                curTorque = powerShift > 0 ? carSettings.shiftPower : carSettings.carPower;
+            }
+
+            else{ 
+                powerShift = Mathf.MoveTowards(powerShift, 100, Time.deltaTime * 5);
+                curTorque = carSettings.carPower;
+            }
+
+
+            w.rotation = Mathf.Repeat(w.rotation + Time.deltaTime * col.rpm * 360 / 60, 360);
+            w.rotation2 = Mathf.Lerp(w.rotation2, col.steerAngle, 0.1f);
+            w.wheel.localRotation = Quaternion.Euler(w.rotation, w.rotation2, 0);
+
+
+            Vector3 lp = w.wheel.localPosition;
+
+            if (col.GetGroundHit(out hit)){
+                lp.y -= Vector3.Dot(w.wheel.position - hit.point, transform.TransformDirection(0, 1, 0) / transform.lossyScale.x) - (col.radius);
+                lp.y = Mathf.Clamp(lp.y, -10, w.pos_y);
+            }
+
+            else{
+                lp.y = w.startPos.y - 0.2f;
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
                 rb.AddForce(Vector3.down * 5000);
             }
 
             curWheel++;
             w.wheel.localPosition = lp;
+<<<<<<< HEAD
         }
 
 
@@ -295,6 +377,19 @@ public class CarControllerNew : MonoBehaviour
         motorRPM = 0.95f * motorRPM + 0.05f * Mathf.Abs(rpm * 5);
         if (motorRPM > 5500) motorRPM = 5200;
 
+=======
+
+        }
+
+        if (motorWheels > 1){
+            rpm = rpm / motorWheels;
+        }
+
+
+        motorRPM = 0.95f * motorRPM + 0.05f * Mathf.Abs(rpm * 5);
+        if (motorRPM > 5500) motorRPM = 5200;
+
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
         int index = (int)(motorRPM / efficiencyTableStep);
         if (index >= efficiencyTable.Length) index = efficiencyTable.Length - 1;
         if (index < 0) index = 0;
@@ -302,6 +397,7 @@ public class CarControllerNew : MonoBehaviour
         float newTorque = curTorque * efficiencyTable[index];
 
 
+<<<<<<< HEAD
         foreach (wheelComponent w in wheels) {
             WheelCollider col = w.collider;
 
@@ -325,16 +421,48 @@ public class CarControllerNew : MonoBehaviour
                     }
 
                     else {
+=======
+        foreach (wheelComponent w in wheels){
+            WheelCollider col = w.collider;
+
+            if (w.drive){
+
+                if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM)){
+                    col.motorTorque = 0;
+                }
+
+                else{
+                    float curTorqueCol = col.motorTorque;
+
+                    if (!brake && accel != 0){
+                        if ((speed < carSettings.limitForward) || (speed < carSettings.limitBackwards)){
+                            col.motorTorque = curTorqueCol * 0.9f + newTorque * 1.0f;
+                        }
+                        else{
+                            col.motorTorque = 0;
+                            col.brakeTorque = 2000;
+                        }
+                    }
+
+                    else{
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
                         col.motorTorque = 0;
                     }
                 }
             }
 
 
+<<<<<<< HEAD
             if (brake || slip2 > 2) {
                 col.steerAngle = Mathf.Lerp(col.steerAngle, steer * w.maxSteer, 0.02f);
             }
             else {
+=======
+            if (brake || slip2 > 2){
+                col.steerAngle = Mathf.Lerp(col.steerAngle, steer * w.maxSteer, 0.02f);
+            }
+            else{
+>>>>>>> 037de5d5d906f7c9017ea819ac4729b08dc2fe25
                 float steerAngle = Mathf.Clamp(speed / carSettings.maxSteerAngle, 1.0f, carSettings.maxSteerAngle);
                 col.steerAngle = steer * (w.maxSteer / steerAngle);
             }
