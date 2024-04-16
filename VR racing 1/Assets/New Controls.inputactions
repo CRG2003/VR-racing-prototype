@@ -1,0 +1,98 @@
+{
+    "name": "New Controls",
+    "maps": [
+        {
+            "name": "controls",
+            "id": "a7b1cf8c-6763-472f-b7ac-ce87f8f4d661",
+            "actions": [
+                {
+                    "name": "steer",
+                    "type": "Value",
+                    "id": "b56d17ee-6c7c-4007-a00e-5b3a4a9f2fad",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Accel",
+                    "type": "Value",
+                    "id": "f6d531a4-c34a-46e8-9279-b208061fb91a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis",
+                    "id": "66efe07b-9c10-4c14-9f0e-3c72e6be26a1",
+                    "path": "1DAxis(minValue=-2,maxValue=2)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "steer",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "bc152ebb-d4e1-48f3-aac2-4620d5020d1d",
+                    "path": "<Keyboard>/#(A)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "steer",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "537710ab-439e-4609-8be8-1666850a501c",
+                    "path": "<Keyboard>/#(D)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "steer",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "9307c39a-c134-432c-8f27-489addc41f3a",
+                    "path": "1DAxis(minValue=-3,maxValue=3,whichSideWins=1)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accel",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "ac687fa4-717f-40cf-b940-f5203ce07dc8",
+                    "path": "<Keyboard>/#(S)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "f5439e40-c6f9-4289-a261-06a09d6ca470",
+                    "path": "<Keyboard>/#(W)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

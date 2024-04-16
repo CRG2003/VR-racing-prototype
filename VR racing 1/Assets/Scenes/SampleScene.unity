@@ -249,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: d40cda62855726d4e8af62df4770098a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: d40cda62855726d4e8af62df4770098a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -484,7 +484,7 @@ Transform:
   m_GameObject: {fileID: 562996343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.19999993, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1425,7 +1425,7 @@ Transform:
   m_GameObject: {fileID: 921851338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0.099999905, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1921,7 +1921,7 @@ Transform:
   m_GameObject: {fileID: 1320172533}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2792,7 +2792,7 @@ MonoBehaviour:
   neutral: 1
   backwards: 0
   carSettings:
-    carsteer: {fileID: 0}
+    carSteer: {fileID: 0}
     springs: 25000
     dampers: 1500
     carPower: 120
