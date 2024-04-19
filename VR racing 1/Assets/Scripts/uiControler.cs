@@ -9,6 +9,7 @@ public class uiControler : MonoBehaviour
     // game objects
     public TMP_Text timer;
     public TMP_Text speedo;
+    public TMP_Text revs;
     public GameObject checkpoints;
     public GameObject player;
 
@@ -24,8 +25,7 @@ public class uiControler : MonoBehaviour
     void Start()
     {
         foreach (Transform child in checkpoints.transform) {
-            GameObject i = child.gameObject;
-            cPoints.Add(i);
+            cPoints.Add(child.gameObject);
         }
     }
 
@@ -57,7 +57,8 @@ public class uiControler : MonoBehaviour
         if (disp) {
             timer.text = mins + ":" + secs + ":" + mils;
         }
-        speedo.text = ((int)player.GetComponent<CarControllerNew>().speed).ToString() + "mph";
+        speedo.text = ((int)player.GetComponent<CarControllerNew>().speed).ToString() + " mph";
+        revs.text = ((int)player.GetComponent<CarControllerNew>().motorRPM).ToString() + " rpm";
 
         Debug.Log(cPoints[curPoint].GetComponent<checkpoint>().passed);
         if (cPoints[curPoint].GetComponent<checkpoint>().passed) {
@@ -65,6 +66,9 @@ public class uiControler : MonoBehaviour
             if (curPoint != cPoints.Count - 1) {
                 curPoint++;
                 returnTimer = 4.0f;
+            }
+            else {
+                returnTimer = 999;
             }
         }
 
