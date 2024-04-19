@@ -1502,6 +1502,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2377612, guid: b82529e8ddfc06e4fb493d04ff82ec97, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 73b905647716b2a44a5b72995b107f60, type: 2}
     - target: {fileID: 5490658, guid: b82529e8ddfc06e4fb493d04ff82ec97, type: 3}
       propertyPath: m_Mass
       value: 800
@@ -1725,7 +1729,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 917886633}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9559380414aa604bad74edda69ebf5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 70a8ba48f5b62ba41817a92c8b82c7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   passed: 0
@@ -2260,7 +2264,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dfd5f79c35b2f1049822ea6800c735ed, type: 2}
+  - {fileID: 2100000, guid: b27bfcdf2fe38f94d83315d435a0f13b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3140,7 +3144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1608383089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9559380414aa604bad74edda69ebf5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 70a8ba48f5b62ba41817a92c8b82c7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   passed: 0
@@ -3804,7 +3808,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1894432904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9559380414aa604bad74edda69ebf5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 70a8ba48f5b62ba41817a92c8b82c7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   passed: 0
@@ -4187,7 +4191,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1998157961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9559380414aa604bad74edda69ebf5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 70a8ba48f5b62ba41817a92c8b82c7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   passed: 0
