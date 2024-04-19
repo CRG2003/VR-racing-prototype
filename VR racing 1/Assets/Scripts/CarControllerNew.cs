@@ -19,7 +19,7 @@ public class CarControllerNew : MonoBehaviour
 
     // private variables
     private float steer = 0f, accel = 0f, lastSpeed = -10f;
-    private float shiftTime = 0f, shiftDelay = 0f, wantedRPM = 0f;
+    private float shiftDelay = 0f, wantedRPM = 0f;
     private float w_rotate, slip, slip2 = 0f;
     private bool shiftMotor;
 
@@ -47,7 +47,7 @@ public class CarControllerNew : MonoBehaviour
         public float springs = 25000f, dampers = 15000f;
 
         // power
-        public float carPower = 120f, shiftPower = 150f, brakePower = 8000f;
+        public float carPower = 120f, shiftPower = 150f, brakePower = 80000f;
 
         // RPM
         public float shiftDownRPM = 1500f, shiftUpRPM = 2500f, idleRPM = 500f;
@@ -172,7 +172,6 @@ public class CarControllerNew : MonoBehaviour
         }
 
         shiftDelay = now + 1;
-        shiftTime = 1.5f;
     }
 
 
@@ -188,7 +187,6 @@ public class CarControllerNew : MonoBehaviour
         }
 
         shiftDelay = now + 0.1f;
-        shiftTime = 2;
     }
 
 

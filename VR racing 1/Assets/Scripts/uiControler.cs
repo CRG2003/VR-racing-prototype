@@ -6,15 +6,27 @@ using UnityEngine;
 
 public class uiControler : MonoBehaviour
 {
+    // game objects
     public TMP_Text timer;
-    float mil;
-    int min, sec;
+    public TMP_Text speedo;
+    public GameObject checkpoints;
+    public GameObject player;
+
+    List<GameObject> cPoints = new List<GameObject>();
+
+    // simple variables 
+    float mil, returnTimer = 0;
+    int min, sec, curPoint = 0;
     string mins, secs, mils;
+    bool disp = true;
 
 
     void Start()
     {
-        timer = GameObject.Find("timer").GetComponent<TMP_Text>();
+        foreach (Transform child in checkpoints.transform) {
+            GameObject i = child.gameObject;
+            cPoints.Add(i);
+        }
     }
 
     void Update()
@@ -37,8 +49,24 @@ public class uiControler : MonoBehaviour
             mils = "0" + mils;
         }
 
-        timer.text = mins + ":" + secs + ":" + mils;
+        returnTimer -= Time.deltaTime;
+        if (returnTimer < 0) {
+            disp = true;
+        }
 
+        if (disp) {
+            timer.text = mins + ":" + secs + ":" + mils;
+        }
+        speedo.text = ((int)player.GetComponent<CarControllerNew>().speed).ToString() + "mph";
+
+        Debug.Log(cPoints[curPoint].GetComponent<checkpoint>().passed);
+        if (cPoints[curPoint].GetComponent<checkpoint>().passed) {
+            disp = false;
+            if (curPoint != cPoints.Count - 1) {
+                curPoint++;
+                returnTimer = 4.0f;
+            }
+        }
 
     }
 
