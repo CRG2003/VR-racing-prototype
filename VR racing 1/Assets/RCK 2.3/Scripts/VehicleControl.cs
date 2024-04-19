@@ -335,7 +335,7 @@ public class VehicleControl : MonoBehaviour
                 carSounds.switchGear.GetComponent<AudioSource>().Play();
 
 
-                if (!carSetting.automaticGear)
+            if (!carSetting.automaticGear)
             {
                 if (currentGear == 0)
                 {

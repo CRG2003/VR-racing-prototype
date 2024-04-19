@@ -12,6 +12,7 @@ public class CarControllerNew : MonoBehaviour
 
 
     // public variables
+    public int curGear = 1;
     public float curTorque = 100f, powerShift = 100f, motorRPM = 0f, speed = 0f;
     public bool brake, shift, neutral = true, backwards = false;
 
@@ -120,10 +121,10 @@ public class CarControllerNew : MonoBehaviour
 
         wheels = new wheelComponent[4];
 
-        wheels[0] = setWheel(wfr, carSettings.maxSteerAngle, false, wfr.position.y);
-        wheels[1] = setWheel(wfl, carSettings.maxSteerAngle, false, wfl.position.y);
-        wheels[2] = setWheel(wbr, carSettings.maxSteerAngle, true, wbr.position.y);
-        wheels[3] = setWheel(wbl, carSettings.maxSteerAngle, true, wbl.position.y);
+        wheels[0] = setWheel(wfr, carSettings.maxSteerAngle, true, wfr.position.y);
+        wheels[1] = setWheel(wfl, carSettings.maxSteerAngle, true, wfl.position.y);
+        wheels[2] = setWheel(wbr, carSettings.maxSteerAngle, false, wbr.position.y);
+        wheels[3] = setWheel(wbl, carSettings.maxSteerAngle, false, wbl.position.y);
 
 
         // sets settings and initial friction of each wheel
@@ -159,9 +160,41 @@ public class CarControllerNew : MonoBehaviour
     }
 
 
+    public void shiftUp() {
+        float now = Time.timeSinceLevelLoad;
+
+        if (now < shiftDelay) {
+            return;
+        }
+
+        if (curGear < carSettings.gears.Length - 1) {
+            curGear++;
+        }
+
+        shiftDelay = now + 1;
+        shiftTime = 1.5f;
+    }
+
+
+    public void shiftDown() {
+        float now = Time.timeSinceLevelLoad;
+
+        if (now < shiftDelay) {
+            return;
+        }
+
+        if (curGear > 0) {
+            curGear--;
+        }
+
+        shiftDelay = now + 0.1f;
+        shiftTime = 2;
+    }
+
 
     void FixedUpdate(){
         speed = rb.velocity.magnitude * 2.7f;
+        rb.centerOfMass = new Vector3(0, -0.8f, 0);
         
         if (speed < lastSpeed - 10 && slip < 10) {
             slip = lastSpeed / 15;
@@ -183,6 +216,19 @@ public class CarControllerNew : MonoBehaviour
             carSettings.carSteer.localEulerAngles = new Vector3(steerCurAngle.x, steerCurAngle.y, steerCurAngle.z + (steer * -120.0f));
         }
 
+        if (curGear == 1 && accel < 0 && speed < 5) {
+            shiftDown();
+        }
+        else if (curGear == 0 && accel > 0 && speed < 5) {
+            shiftUp();
+        }
+        else if (motorRPM > carSettings.shiftUpRPM && accel > 0 && speed > 10 && !brake) {
+            shiftUp();
+        }
+        else if (motorRPM < carSettings.shiftDownRPM && curGear > 1) {
+            shiftDown();
+        }
+
 
 
         wantedRPM = (5500.0f * accel) * 0.1f + wantedRPM * 0.9f;
@@ -196,7 +242,7 @@ public class CarControllerNew : MonoBehaviour
             WheelCollider col = w.collider;
 
             if (w.drive) {
-                if (brake) {
+                if (brake && curGear < 2) {
                     rpm += accel * carSettings.idleRPM;
                 }
                 else {
@@ -229,7 +275,7 @@ public class CarControllerNew : MonoBehaviour
 
 
             else {
-                col.brakeTorque = accel == 0 ? col.brakeTorque = 1000 : col.brakeTorque = 0;
+                col.brakeTorque = accel == 0 || neutral ? col.brakeTorque = 1000 : col.brakeTorque = 0;
 
                 slip = speed > 0 ? (speed > 100 ? slip = Mathf.Lerp(slip, 1 + Mathf.Abs(steer), 0.02f) : slip = Mathf.Lerp(slip, 1.5f, 0.02f)) : slip = Mathf.Lerp(slip, 0.01f, 0.02f);
 
@@ -240,7 +286,7 @@ public class CarControllerNew : MonoBehaviour
             WheelFrictionCurve fc = col.forwardFriction;
 
 
-            fc.asymptoteValue = 5000.0f;
+            fc.asymptoteValue = 50000.0f;
             fc.extremumSlip = 2.0f;
             fc.asymptoteSlip = 20.0f;
             fc.stiffness = 2.0f / (slip + slip2);
@@ -253,13 +299,22 @@ public class CarControllerNew : MonoBehaviour
 
 
 
-            if (Mathf.Abs(steer) < 0.2f) {
+            if (shift && curGear > 1 && speed > 50 && shiftMotor && Mathf.Abs(steer) < 0.2f) {
+
+                if (powerShift == 0) {
+                    shiftMotor = false;
+                }
+                powerShift = Mathf.MoveTowards(powerShift, 0, Time.deltaTime * 10);
+
                 curTorque = powerShift > 0 ? carSettings.shiftPower : carSettings.carPower;
             }
             else {
+
                 if (powerShift > 20) {
                     shiftMotor = true;
                 }
+                powerShift = Mathf.MoveTowards(powerShift, 100, Time.deltaTime * 10);   
+
                 curTorque = carSettings.carPower;
             }
 
@@ -290,9 +345,13 @@ public class CarControllerNew : MonoBehaviour
             w.wheel.localPosition = lp;
         }
 
+        if (motorWheels > 1) {
+            rpm = rpm / motorWheels;
+        }
 
 
-        motorRPM = 0.95f * motorRPM + 0.05f * Mathf.Abs(rpm * 5);
+
+        motorRPM = 0.95f * motorRPM + 0.05f * Mathf.Abs(rpm * carSettings.gears[curGear]);
         if (motorRPM > 5500) motorRPM = 5200;
 
 
@@ -300,7 +359,7 @@ public class CarControllerNew : MonoBehaviour
         if (index >= efficiencyTable.Length) index = efficiencyTable.Length - 1;
         if (index < 0) index = 0;
 
-        float newTorque = curTorque * efficiencyTable[index];
+        float newTorque = curTorque * carSettings.gears[curGear] * efficiencyTable[index];
 
 
         foreach (wheelComponent w in wheels) {
