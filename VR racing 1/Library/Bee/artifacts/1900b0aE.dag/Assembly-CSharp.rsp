@@ -379,6 +379,7 @@
 "Assets/RCK 2.3/Scripts/VehicleDamage.cs"
 "Assets/RCK 2.3/Skidmarks/Skidmarks Essentials/Skidmarks.cs"
 "Assets/RCK 2.3/Skidmarks/WheelSkidmarks.cs"
+"Assets/Scripts/begin.cs"
 "Assets/Scripts/CarControllerNew.cs"
 "Assets/Scripts/checkpoint.cs"
 "Assets/Scripts/HandControl.cs"

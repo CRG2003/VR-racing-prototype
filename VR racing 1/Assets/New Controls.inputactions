@@ -61,7 +61,7 @@
                 {
                     "name": "1D Axis",
                     "id": "9307c39a-c134-432c-8f27-489addc41f3a",
-                    "path": "1DAxis(minValue=-3,maxValue=3,whichSideWins=1)",
+                    "path": "1DAxis(minValue=-3,whichSideWins=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

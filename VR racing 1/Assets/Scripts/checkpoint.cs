@@ -8,7 +8,7 @@ public class checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Car")) {
+        if (other.CompareTag("Car")) {
             passed = true;
         }
     }

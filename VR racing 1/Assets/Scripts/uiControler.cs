@@ -11,6 +11,7 @@ public class uiControler : MonoBehaviour
     public TMP_Text speedo;
     public TMP_Text revs;
     public GameObject checkpoints;
+    public GameObject start;
     public GameObject player;
 
     List<GameObject> cPoints = new List<GameObject>();
@@ -22,41 +23,54 @@ public class uiControler : MonoBehaviour
     bool disp = true;
 
 
-    void Start()
-    {
+    void Start() {
+
         foreach (Transform child in checkpoints.transform) {
             cPoints.Add(child.gameObject);
         }
     }
 
-    void Update()
-    {
-        mil += Time.deltaTime;
-        if (mil > 1){
-            sec++;
-            mil -= 1;
+    void Update() {
+
+        if (start.GetComponent<begin>().started) {
+            mil += Time.deltaTime;
+            if (mil > 1) {
+                sec++;
+                mil -= 1;
+            }
+            if (sec > 59) {
+                min++;
+                sec -= 60;
+            }
         }
-        if (sec > 59){
-            min++;
-            sec -= 60;
+        else {
+            mil = 0;
+            sec = 0;
+            min = 0;
+            foreach (GameObject c in cPoints) {
+                c.GetComponent<checkpoint>().passed = false;
+            }
         }
 
         mins = format(min);
-        secs = format(sec);
+            secs = format(sec);
 
-        mils = format(mil * 1000);
-        if (mil < .1f){
-            mils = "0" + mils;
-        }
+            mils = format(mil * 1000);
+            if (mil < .1f) {
+                mils = "0" + mils;
+            }
 
-        returnTimer -= Time.deltaTime;
-        if (returnTimer < 0) {
-            disp = true;
-        }
+            returnTimer -= Time.deltaTime;
+            if (returnTimer < 0) {
+                disp = true;
+            }
 
-        if (disp) {
-            timer.text = mins + ":" + secs + ":" + mils;
-        }
+            if (disp) {
+                timer.text = mins + ":" + secs + ":" + mils;
+            }
+        
+    
+
         speedo.text = ((int)player.GetComponent<CarControllerNew>().speed).ToString() + " mph";
         revs.text = ((int)player.GetComponent<CarControllerNew>().motorRPM).ToString() + " rpm";
 
@@ -70,7 +84,6 @@ public class uiControler : MonoBehaviour
                 returnTimer = 999;
             }
         }
-
     }
 
     string format(float i) {

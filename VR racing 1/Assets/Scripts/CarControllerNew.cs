@@ -153,7 +153,7 @@ public class CarControllerNew : MonoBehaviour
             col.suspensionSpring = js;
 
             col.radius = .4f;
-            col.mass = 1000f;
+            col.mass = 600f;
 
 
             WheelFrictionCurve fc = col.forwardFriction;
