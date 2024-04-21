@@ -60,7 +60,6 @@ public class uiControler : MonoBehaviour
         speedo.text = ((int)player.GetComponent<CarControllerNew>().speed).ToString() + " mph";
         revs.text = ((int)player.GetComponent<CarControllerNew>().motorRPM).ToString() + " rpm";
 
-        Debug.Log(cPoints[curPoint].GetComponent<checkpoint>().passed);
         if (cPoints[curPoint].GetComponent<checkpoint>().passed) {
             disp = false;
             if (curPoint != cPoints.Count - 1) {

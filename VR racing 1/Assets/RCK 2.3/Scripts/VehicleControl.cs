@@ -742,7 +742,6 @@ public class VehicleControl : MonoBehaviour
                 if (!carSounds.nitro.isPlaying)
                 {
                     carSounds.nitro.GetComponent<AudioSource>().Play();
-
                 }
 
 
