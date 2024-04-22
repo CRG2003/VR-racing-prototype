@@ -13,11 +13,12 @@ public class uiControler : MonoBehaviour
     public GameObject checkpoints;
     public GameObject start;
     public GameObject player;
+    public GameObject vig;
 
     List<GameObject> cPoints = new List<GameObject>();
 
     // simple variables 
-    float mil, returnTimer = 0;
+    float mil, returnTimer = 0, scl;
     int min, sec, curPoint = 0;
     string mins, secs, mils;
     bool disp = true;
@@ -53,23 +54,23 @@ public class uiControler : MonoBehaviour
         }
 
         mins = format(min);
-            secs = format(sec);
+        secs = format(sec);
 
-            mils = format(mil * 1000);
-            if (mil < .1f) {
-                mils = "0" + mils;
-            }
+        mils = format(mil * 1000);
+        if (mil < .1f) {
+            mils = "0" + mils;
+        }
 
-            returnTimer -= Time.deltaTime;
-            if (returnTimer < 0) {
-                disp = true;
-            }
+        returnTimer -= Time.deltaTime;
+        if (returnTimer < 0) {
+            disp = true;
+        }
 
-            if (disp) {
-                timer.text = mins + ":" + secs + ":" + mils;
-            }
+        if (disp) {
+            timer.text = mins + ":" + secs + ":" + mils;
+        }
         
-    
+        
 
         speedo.text = ((int)player.GetComponent<CarControllerNew>().speed).ToString() + " mph";
         revs.text = ((int)player.GetComponent<CarControllerNew>().motorRPM).ToString() + " rpm";
@@ -84,6 +85,9 @@ public class uiControler : MonoBehaviour
                 returnTimer = 999;
             }
         }
+
+        scl = (400 - player.GetComponent<CarControllerNew>().speed) / 200;
+        vig.transform.localScale = new Vector3(scl, scl, scl);
     }
 
     string format(float i) {
